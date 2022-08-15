@@ -2,7 +2,7 @@ import torch
 from torch import nn
 
 answers = ["ant", "and", "tan"]
-letters = "antd"
+letters = "abcdefghijklmnopqrstuvwxyz"
 
 letter_bits = len(letters)
 color_bits = 2
@@ -70,9 +70,9 @@ def pred_to_letters(pred):
     list = pred.tolist()
     for i in range(column_count):
         mx = -100
-        mx_val = 'x'
-        for j in range(4):
-            new = list[i*4 + j]
+        mx_val = '?'
+        for j in range(letter_bits):
+            new = list[i*letter_bits + j]
             if new > mx:
                 mx = new
                 mx_val = letters[j]
@@ -86,7 +86,7 @@ def mk_answer(answer):
     return torch.tensor(res)
 
 def train_loop(model, loss_fn, optimizer):
-    for e in range(3000):
+    for e in range(5000):
         for answer in answers:
             guesses = []
             preds = []
