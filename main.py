@@ -37,7 +37,7 @@ def train_loop(model, loss_fn, optimizer):
                 preds.append(pred)
                 guesses.append(guess)
             if e % 100 == 0:
-                print(e, answer, guesses)
+                print(e, show_grid(answer, guesses))
             loss = loss_fn(torch.stack(preds), torch.stack([mk_answer(answer)] * row_count))
             optimizer.zero_grad()
             loss.backward()

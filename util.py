@@ -2,9 +2,11 @@ import torch
 from torch import nn
 from config import *
 
+# Create a blank row of the approxiate size
 def blank_row():
     return (([0.0] * letter_bits) + white) * column_count
 
+# Convert a single letter to a array of letter bits
 def encode_letter(x):
     return [1.0 if c == x else 0.0 for c in letters]
 
@@ -49,3 +51,7 @@ def mk_answer(answer):
     for x in answer:
         res += encode_letter(x)
     return torch.tensor(res)
+
+
+def show_grid(answer, grid):
+    return "{} {}".format(answer, grid)
