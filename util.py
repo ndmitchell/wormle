@@ -54,4 +54,20 @@ def mk_answer(answer):
 
 
 def show_grid(answer, grid):
-    return "{} {}".format(answer, grid)
+    green_tick = "\033[92m\u2714\uFE0F\033[0m"
+    red_cross = "\033[91m\u274C\033[0m"
+
+    res = answer + " | "
+    for x in grid:
+        res += " "
+        for xc, ac in zip(x, answer):
+            if xc == ac:
+                res += "\033[42m" + xc
+            elif xc in answer:
+                res += "\033[43m" + xc
+            else:
+                res += "\033[100m" + xc
+        res += "\033[0m"
+        if x == answer:
+            return res + " " + green_tick
+    return res + " " + red_cross
