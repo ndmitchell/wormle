@@ -34,16 +34,8 @@ def mk_grid(answer, guess):
 
 def pred_to_letters(pred):
     res = ""
-    list = pred.tolist()
-    for i in range(column_count):
-        mx = -100
-        mx_val = '?'
-        for j in range(letter_bits):
-            new = list[i*letter_bits + j]
-            if new > mx:
-                mx = new
-                mx_val = letters[j]
-        res += mx_val
+    for p in pred.reshape((column_count, letter_bits)):
+        res += letters[p.argmax()]
     return res
 
 def mk_answer(answer):
