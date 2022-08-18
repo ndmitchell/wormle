@@ -1,13 +1,13 @@
-simple = True
+real_answers = 0
 
-if simple:
+if real_answers == 0:
     letters = "antd"
     answers = ["ant", "and", "tan"]
 else:
     letters = "abcdefghijklmnopqrstuvwxyz"
     with open("wordlist_hidden.txt") as f:
         answers = f.read().split("\n")[:-1]
-    answers = answers[:5]
+    answers = answers[:real_answers]
 
 letter_bits = len(letters)
 color_bits = 2
