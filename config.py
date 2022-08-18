@@ -14,6 +14,7 @@ color_bits = 2
 column_count = len(answers[0])
 row_count = 6
 
+# We require that white is all zero's to use tensor.zeros
 white = [0, 0]
 gray = [0, 1]
 yellow = [1, 0]

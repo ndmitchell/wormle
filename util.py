@@ -2,9 +2,11 @@ import torch
 from torch import nn
 from config import *
 
+_blank_row = torch.zeros(((letter_bits + color_bits) * column_count,), dtype=torch.float)
+
 # Create a blank row of the approxiate size
 def blank_row():
-    return (([0.0] * letter_bits) + white) * column_count
+    return _blank_row
 
 # Convert a single letter to a array of letter bits
 def encode_letter(x):
@@ -21,16 +23,16 @@ def filled_row(answer, guess):
         else:
             status = gray
         res += letter + status
-    return res
+    return torch.tensor(res)
 
 def mk_grid(answer, guess):
     res = []
     for i in range(row_count):
         if len(guess) <= i:
-            res += blank_row()
+            res.append(blank_row())
         else:
-            res += filled_row(answer, guess[i])
-    return torch.Tensor(res)
+            res.append(filled_row(answer, guess[i]))
+    return torch.stack(res).flatten()
 
 def pred_to_letters(pred):
     res = ""
