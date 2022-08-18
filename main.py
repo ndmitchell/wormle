@@ -27,6 +27,10 @@ learning_rate = 1e-3
 
 def train_loop(model, loss_fn, optimizer):
     for e in range(5000):
+        print_out = e % 100 == 0
+        if print_out:
+            print("Round {}".format(e))
+
         # print(e)
         for answer in answers:
             guesses = []
@@ -36,8 +40,8 @@ def train_loop(model, loss_fn, optimizer):
                 guess = pred_to_letters(pred)
                 preds.append(pred)
                 guesses.append(guess)
-            if e % 100 == 0:
-                print(e, show_grid(answer, guesses))
+            if print_out:
+                print(show_grid(answer, guesses))
             loss = loss_fn(torch.stack(preds), torch.stack([mk_answer(answer)] * row_count))
             optimizer.zero_grad()
             loss.backward()
