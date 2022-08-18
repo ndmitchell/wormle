@@ -1,14 +1,20 @@
 import torch
 from torch import nn
 
-with open("wordlist_hidden.txt") as f:
-    answers = f.read().split("\n")[:-1]
+simple = True
 
-letters = "abcdefghijklmnopqrstuvwxyz"
+if simple:
+    letters = "antd"
+    answers = ["ant", "and", "tan"]
+else:
+    letters = "abcdefghijklmnopqrstuvwxyz"
+    with open("wordlist_hidden.txt") as f:
+        answers = f.read().split("\n")[:-1]
+    answers = answers[:5]
 
 letter_bits = len(letters)
 color_bits = 2
-column_count = 5
+column_count = len(answers[0])
 row_count = 6
 
 white = [0, 0]
@@ -89,7 +95,7 @@ def mk_answer(answer):
 
 def train_loop(model, loss_fn, optimizer):
     for e in range(5000):
-        print(e)
+        # print(e)
         for answer in answers:
             guesses = []
             preds = []
